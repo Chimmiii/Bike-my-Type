@@ -57,9 +57,7 @@ Project Structure
 
 The logical architecture separates the core business logic (inventory and rentals) from the UI presentation.
 
-Component
-
-Description
+Component and Description
 
 Bike.java (Abstract)
 
@@ -89,11 +87,7 @@ MainGUI.java
 
 The primary Java Swing JFrame that orchestrates all panel views (Inventory, Cart, Receipt).
 
-Technologies Used
 
-Technology
-
-Role
 
 Java Development Kit (JDK) 8+
 
@@ -117,18 +111,11 @@ Java IDE (Recommended): An IDE like IntelliJ IDEA or Eclipse simplifies project 
 
 Running the Application
 
-Clone the repository:
-
-git clone [https://github.com/YOUR_GITHUB_USERNAME/Bike-my-Type.git](https://github.com/YOUR_GITHUB_USERNAME/Bike-my-Type.git)
-
-
-(Remember to replace YOUR_GITHUB_USERNAME with your actual username.)
-
 Open the Project: Import the cloned directory into your Java IDE.
 
 Run: Execute the main method located in FinalProject.java.
 
-👥 Group Members
+Group Members
 
 This project was completed by the Pokpok Girls group.
 
