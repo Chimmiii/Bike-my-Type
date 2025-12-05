@@ -328,3 +328,13 @@ class RentalService {
             .orElse(null);
     }
 }
+
+// --- 3. JAVA SWING GUI IMPLEMENTATION ---
+    // Insert code here
+
+public class BikeRentalSystem {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new MainFrame());
+    }
+}
+
