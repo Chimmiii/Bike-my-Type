@@ -1,4 +1,4 @@
-🚴 Bike my Type: Bike Rental Management System
+Bike my Type: Bike Rental Management System
 
 Group Name: Pokpok Girls (Bacsal, Glaziela B. and Palma, Angelo Joachim L.)
 Course: CMSC 22 - Object-Oriented Programming
@@ -24,7 +24,7 @@ Bike my Type is a bike rental management system developed to demonstrate core pr
 
 The system is designed to handle all aspects of a rental transaction, from initial inventory display to final receipt generation, using concepts like inheritance and polymorphism to manage different bike types.
 
-✨ Key Features
+Key Features
 
 This project implements the following core functionalities:
 
@@ -67,7 +67,7 @@ A clear line-item breakdown of each bike rented (quantity, rate, hours, and subt
 
 The final grand total cost.
 
-💻 Project Structure
+Project Structure
 
 The logical architecture separates the core business logic (inventory and rentals) from the UI presentation.
 
@@ -103,7 +103,7 @@ MainGUI.java
 
 The primary Java Swing JFrame that orchestrates all panel views (Inventory, Cart, Receipt).
 
-🛠️ Technologies Used
+Technologies Used
 
 Technology
 
@@ -121,7 +121,7 @@ File I/O / Serialization
 
 (Placeholder: Data Persistence method used to save and load inventory data between sessions.)
 
-📂 Getting Started
+Getting Started
 
 Prerequisites
 
@@ -152,8 +152,4 @@ Primary Role
 
 Bacsal, Glaziela B.
 
-[EDIT THIS: e.g., GUI Development & Interface Design]
-
 Palma, Angelo Joachim L.
-
-[EDIT THIS: e.g., Core Logic Implementation & Inventory Management]
