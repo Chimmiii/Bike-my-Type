@@ -4,21 +4,7 @@ Group Name: Pokpok Girls (Bacsal, Glaziela B. and Palma, Angelo Joachim L.)
 Course: CMSC 22 - Object-Oriented Programming
 Status: In Development
 
-Table of Contents
-
-🚀 Overview
-
-✨ Key Features
-
-💻 Project Structure
-
-🛠️ Technologies Used
-
-📂 Getting Started
-
-👥 Group Members
-
-🚀 Overview
+Overview
 
 Bike my Type is a bike rental management system developed to demonstrate core principles of Object-Oriented Programming (OOP). The application provides an interactive Java Swing-based GUI that allows users to browse a diverse inventory of bikes, manage their rental selection in a cart, and complete a validated checkout process.
 
