@@ -1,5 +1,9 @@
 🚴 Bike my Type: Bike Rental Management System
 
+Group Name: Pokpok Girls (Bacsal, Glaziela B. and Palma, Angelo Joachim L.)
+Course: CMSC 22 - Object-Oriented Programming
+Status: In Development
+
 Table of Contents
 
 🚀 Overview
@@ -16,88 +20,88 @@ Table of Contents
 
 🚀 Overview
 
-Bike my Type is a robust bike rental management system developed for CMSC 22 (Object-Oriented Programming). The application provides an interactive Java Swing-based GUI for users to browse, select, and rent various types of bicycles. The core goal is to demonstrate key OOP principles, including Inheritance, Polymorphism, and Encapsulation, through a practical, real-world scenario.
+Bike my Type is a bike rental management system developed to demonstrate core principles of Object-Oriented Programming (OOP). The application provides an interactive Java Swing-based GUI that allows users to browse a diverse inventory of bikes, manage their rental selection in a cart, and complete a validated checkout process.
 
-The system handles the entire rental lifecycle, from viewing inventory stock to generating a detailed receipt.
-
-[ADD SCREENSHOT HERE: Image of Main Application Screenshot (e.g., screenshots/main_inventory.png)]
+The system is designed to handle all aspects of a rental transaction, from initial inventory display to final receipt generation, using concepts like inheritance and polymorphism to manage different bike types.
 
 ✨ Key Features
 
 This project implements the following core functionalities:
 
-1. Interactive GUI using Java Swing
+1. Interactive GUI (Java Swing)
 
-Main Display: Automatically shows available bikes with their name, photo, hourly rate, and availability status.
+Main Display: Displays all available bike types, including their name, photo (placeholder image/icon), hourly rate, and available quantity.
 
-Filtering & Sorting: Options to organize inventory (e.g., by price or bike type).
+User Interface: Features dedicated panels for browsing the inventory, viewing the cart, and displaying the final receipt.
 
-Details View: A "View Details" option to read a full description of any bike.
+Filtering & Sorting: Options to organize the inventory list (e.g., by hourly rate, category, or availability).
 
-2. Robust Rental System
+Details View: A "View Details" function to display the full description of a selected bike.
 
-Cart Management: Allows users to add multiple bikes to a session's cart, adjust quantities/hours, and remove items.
+2. Rental and Transaction System
 
-Input Validation: Prevents users from renting more bikes than the available stock.
+Cart Management: Users can add multiple bike types to their cart, specify the number of units, and select the rental duration (number of hours).
 
-Cost Calculation: Calculates the total cost using the formula:
+Input Validation: The system prevents the user from renting more units of a specific bike type than are currently in stock.
+
+Cost Calculation: Total rental cost is dynamically calculated using the formula:
 
 
-$$\text{Total Rate} = \text{Number of Hours} \times \text{Rate per Hour}$$
+$$\text{Total Cost} = \sum (\text{Rate per Hour} \times \text{Number of Hours} \times \text{Quantity})$$
 
-Rental Tracking: Decrements the available stock count upon successful checkout.
+Inventory Update: The system decrements the available stock count immediately upon successful checkout.
 
-3. Inventory Management (Backend)
+3. OOP Implementation
 
-Bike Hierarchy: Uses an abstract Bike class and subclasses (e.g., EBike, MountainBike) to handle different bike models and rates (Polymorphism).
+Inheritance: An abstract Bike class defines common properties, which are extended by concrete subclasses (EBike, MountainBike, etc.).
 
-Stock Tracking: Maintains the current quantity for each bike model.
+Encapsulation: Dedicated classes like BikeInventoryItem and RentalCartItem manage stock, rates, and transaction data separately from the core UI.
 
 4. Receipt Generation
 
-Upon checkout confirmation, the system generates a virtual receipt containing:
+Upon confirmation, a detailed receipt is displayed, containing:
 
-Renter's Name and Contact Number.
+Renter's identifying information (Name and Contact Number).
 
-A line-item list of rented bikes, including hours, unit cost, and subtotal.
+A clear line-item breakdown of each bike rented (quantity, rate, hours, and subtotal).
 
-The final total cost of the rental session.
+The final grand total cost.
 
 💻 Project Structure
 
-The project is organized into several key classes to ensure clean separation of concerns.
+The logical architecture separates the core business logic (inventory and rentals) from the UI presentation.
 
-Class/Package
+Component
 
-Purpose
+Description
 
-Bike (Abstract)
+Bike.java (Abstract)
 
-Base class for all bike types, defining common attributes and the getTotalPrice() method.
+The base class for all rental items, defining common methods and properties.
 
-EBike, MountainBike, etc.
+EBike.java, MountainBike.java, etc.
 
-Concrete subclasses extending Bike and providing specific details (model, description).
+Concrete bike model definitions extending Bike.
 
-BikeInventoryItem
+BikeInventoryItem.java
 
-Links a Bike type to its current stock quantity and image file path.
+Tracks a specific Bike type's stockQuantity and long description.
 
-RentalCartItem
+RentalCartItem.java
 
-Represents a single line item in the user's cart (Bike type, hours, quantity).
+Stores transaction details: the Bike being rented, hoursRented, and quantity selected by the user.
 
-RentalService
+RentalService.java
 
-The central logic handler. Manages the main inventory, processes rental transactions, and handles validation.
+The central service class. Manages the master inventory list, handles stock updates, and performs checkout validation.
 
-Customer
+Customer.java
 
-Stores the renter's details (Name, Contact Number) for receipt generation.
+Simple class to hold user input (name, contact number) during checkout.
 
-GUI Package (e.g., MainFrame, InventoryPanel, CartPanel)
+MainGUI.java
 
-Contains all Java Swing classes responsible for the interactive user interface.
+The primary Java Swing JFrame that orchestrates all panel views (Inventory, Cart, Receipt).
 
 🛠️ Technologies Used
 
@@ -107,27 +111,23 @@ Role
 
 Java Development Kit (JDK) 8+
 
-Primary language and environment.
+Primary programming language.
 
 Java Swing
 
-Used for building the interactive and user-friendly Graphical User Interface (GUI).
+Used for building the Graphical User Interface (GUI).
 
-Object-Oriented Programming (OOP)
+File I/O / Serialization
 
-The foundational methodology used to structure the code.
-
-Data Persistence
-
-[EDIT THIS: Specify how data is saved, e.g., Object Serialization, or File I/O (CSV/Text files)]
+(Placeholder: Data Persistence method used to save and load inventory data between sessions.)
 
 📂 Getting Started
 
 Prerequisites
 
-Ensure you have Java Development Kit (JDK) 8 or later installed on your system.
+Java Development Kit (JDK) 8 or later: Required to compile and run the Java source code.
 
-An Integrated Development Environment (IDE) such as IntelliJ IDEA or Eclipse is recommended.
+Java IDE (Recommended): An IDE like IntelliJ IDEA or Eclipse simplifies project management.
 
 Running the Application
 
@@ -136,21 +136,19 @@ Clone the repository:
 git clone [https://github.com/YOUR_GITHUB_USERNAME/Bike-my-Type.git](https://github.com/YOUR_GITHUB_USERNAME/Bike-my-Type.git)
 
 
-Navigate to the project directory.
+(Remember to replace YOUR_GITHUB_USERNAME with your actual username.)
 
-Open the project in your IDE (e.g., import as a Maven/Gradle or simple Java project).
+Open the Project: Import the cloned directory into your Java IDE.
 
-Compile and run the FinalProject.java file, which contains the main method.
-
-The application should launch the main Java Swing window displaying the bike inventory.
+Run: Execute the main method located in FinalProject.java.
 
 👥 Group Members
 
-This project was developed by the Pokpok Girls group for CMSC 22.
+This project was completed by the Pokpok Girls group.
 
 Name
 
-Role/Contribution
+Primary Role
 
 Bacsal, Glaziela B.
 
@@ -158,4 +156,4 @@ Bacsal, Glaziela B.
 
 Palma, Angelo Joachim L.
 
-[EDIT THIS: e.g., Core Logic Implementation & Object Modeling]
+[EDIT THIS: e.g., Core Logic Implementation & Inventory Management]
