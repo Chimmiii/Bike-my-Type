@@ -1,0 +1,330 @@
+/**
+ * CMSC 22 - Project Final Implementation: Bike my Type
+ * Group: Pokpok Girls (Bacsal, Glaziela B. and Palma, Angelo Joachim L.)
+ *
+ * This file contains the complete Java Swing implementation for the Bike Rental Management System.
+ * It follows the principles of OOP (Inheritance, Polymorphism) and utilizes CardLayout for panel navigation.
+ */
+
+// --- 1. BIKE HIERARCHY (Abstract Class and Subclasses) ---
+
+/**
+ * Base abstract class for all bikes, implementing common rate calculation.
+ */
+abstract class Bike {
+    protected String model;
+    protected double ratePerHour;
+    protected String category;
+
+    public Bike(String model, double ratePerHour, String category) {
+        this.model = model;
+        this.ratePerHour = ratePerHour;
+        this.category = category;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public double getRatePerHour() {
+        return ratePerHour;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    // Rate calculation is the same for all, so it's implemented here and made final.
+    public final double getTotalPrice(int hours, int quantity) {
+        return ratePerHour * hours * quantity;
+    }
+
+    // Abstract method for unique short descriptions (used in the inventory view)
+    public abstract String getShortDescription();
+}
+
+class EBike extends Bike {
+    public EBike() {
+        super("Eusef Karl: An E-Bike", 130.00, "Electric Bike");
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "Efficient and powerful electric assistance for long or hilly commutes.";
+    }
+}
+
+class MountainBike extends Bike {
+    public MountainBike() {
+        super("Helena: Your Mountain Bike", 150.00, "Mountain Bike");
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "Rugged tires and suspension ready for off-road trails and challenging terrain.";
+    }
+}
+
+class BasicBike extends Bike {
+    public BasicBike() {
+        super("Paldo: A City Bike", 90.00, "City Cruiser");
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "Simple, reliable, and comfortable for quick rides around the city center.";
+    }
+}
+
+class JapaneseBike extends Bike {
+    public JapaneseBike() {
+        super("Kiko: The Japanese Bike", 100.00, "Japanese Utility");
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "Classic design, often featuring a basket and fenders for daily errands.";
+    }
+}
+
+class RoadBike extends Bike {
+    public RoadBike() {
+        super("Flash: The Road Racer", 180.00, "Road Bike");
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "Lightweight frame and thin tires for high speed on paved roads and highways.";
+    }
+}
+
+class TandemBike extends Bike {
+    public TandemBike() {
+        super("Duo: The Tandem Bike", 220.00, "Two-Seater Tandem");
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "A bike built for two! Requires coordinated pedaling for a fun ride.";
+    }
+}
+
+// --- 2. DATA / UTILITY CLASSES ---
+
+/**
+ * Represents the current available stock of a specific Bike type in the inventory.
+ */
+class BikeInventoryItem {
+    private Bike bike;
+    private int stockQuantity;
+    private String longDescription;
+    private String imageIcon; // Placeholder for image/icon path
+
+    public BikeInventoryItem(Bike bike, int stockQuantity, String longDescription, String imageIcon) {
+        this.bike = bike;
+        this.stockQuantity = stockQuantity;
+        this.longDescription = longDescription;
+        this.imageIcon = imageIcon;
+    }
+
+    public Bike getBike() {
+        return bike;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void decrementStock(int quantity) {
+        if (stockQuantity >= quantity) {
+            stockQuantity -= quantity;
+        }
+    }
+
+    public void incrementStock(int quantity) {
+        stockQuantity += quantity;
+    }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public String getImageIcon() {
+        return imageIcon;
+    }
+}
+
+/**
+ * Represents a single transaction line item in the customer's cart.
+ */
+class RentalCartItem {
+    private Bike bike;
+    private int hoursRented;
+    private int quantityToRent;
+
+    public RentalCartItem(Bike bike, int hoursRented, int quantityToRent) {
+        this.bike = bike;
+        this.hoursRented = hoursRented;
+        this.quantityToRent = quantityToRent;
+    }
+
+    public Bike getBike() {
+        return bike;
+    }
+
+    public int getHoursRented() {
+        return hoursRented;
+    }
+
+    public int getQuantityToRent() {
+        return quantityToRent;
+    }
+
+    public void setQuantityToRent(int quantityToRent) {
+        this.quantityToRent = quantityToRent;
+    }
+
+    public void setHoursRented(int hoursRented) {
+        this.hoursRented = hoursRented;
+    }
+
+    public double calculateSubtotal() {
+        return bike.getTotalPrice(hoursRented, quantityToRent);
+    }
+}
+
+/**
+ * Stores customer details for the receipt.
+ */
+class Customer {
+    private String name;
+    private String contactNumber; // Changed to String as per suggestion
+
+    public Customer(String name, String contactNumber) {
+        this.name = name;
+        this.contactNumber = contactNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+}
+
+
+// --- 3. CORE LOGIC SERVICE ---
+
+/**
+ * Manages the bike inventory and the current rental session (the cart).
+ */
+class RentalService {
+    private List<BikeInventoryItem> inventory;
+    private List<RentalCartItem> cart;
+    private Customer currentCustomer;
+
+    public RentalService() {
+        initializeInventory();
+        cart = new ArrayList<>();
+    }
+
+    private void initializeInventory() {
+        inventory = new ArrayList<>();
+        // Initializing 6 bike variations with stock and descriptions
+        inventory.add(new BikeInventoryItem(new EBike(), 3, 
+            "The Eusef Karl is our premium electric assist bike, featuring a powerful 500W motor and a 50km range. Ideal for conquering steep hills with ease.", "⚡"));
+        inventory.add(new BikeInventoryItem(new MountainBike(), 5, 
+            "The Helena is built for adventure. It has durable aluminum frame, front suspension, and hydraulic disc brakes for maximum control on rough trails.", "⛰️"));
+        inventory.add(new BikeInventoryItem(new BasicBike(), 8, 
+            "The Paldo is your no-frills, reliable transportation. Comfortable saddle and upright handlebars make it perfect for relaxed urban cycling.", "🚲"));
+        inventory.add(new BikeInventoryItem(new JapaneseBike(), 4, 
+            "The Kiko features a low step-through frame, a practical basket, and a chain guard. Excellent for short trips and carrying light groceries.", "🧺"));
+        inventory.add(new BikeInventoryItem(new RoadBike(), 2, 
+            "The Flash is designed for speed. Its lightweight carbon fiber frame minimizes drag, making it suitable for experienced riders on long paved routes.", "💨"));
+        inventory.add(new BikeInventoryItem(new TandemBike(), 1, 
+            "The Duo is a unique two-person bike for couples or friends. Double the fun, double the pedaling effort! Limited stock.", "👫"));
+    }
+
+    public List<BikeInventoryItem> getInventory() {
+        return inventory;
+    }
+
+    public List<RentalCartItem> getCart() {
+        return cart;
+    }
+
+    public void setCurrentCustomer(Customer customer) {
+        this.currentCustomer = customer;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public double getCartTotal() {
+        return cart.stream().mapToDouble(RentalCartItem::calculateSubtotal).sum();
+    }
+
+    /**
+     * Attempts to add a bike to the cart. If the bike is already in the cart, updates quantity.
+     * @param bike The bike type to add.
+     * @param quantity The number of units to rent.
+     * @param hours The duration of the rental.
+     * @return true if successful, false if not enough stock.
+     */
+    public boolean addToCart(Bike bike, int quantity, int hours) {
+        BikeInventoryItem item = inventory.stream()
+            .filter(i -> i.getBike().getModel().equals(bike.getModel()))
+            .findFirst()
+            .orElse(null);
+
+        if (item == null || item.getStockQuantity() < quantity) {
+            return false; // Not enough stock
+        }
+
+        // Check if item is already in cart
+        RentalCartItem existingItem = cart.stream()
+            .filter(c -> c.getBike().getModel().equals(bike.getModel()))
+            .findFirst()
+            .orElse(null);
+
+        if (existingItem != null) {
+            // Update quantity and hours
+            existingItem.setQuantityToRent(quantity);
+            existingItem.setHoursRented(hours);
+        } else {
+            cart.add(new RentalCartItem(bike, hours, quantity));
+        }
+        
+        return true;
+    }
+
+    public void removeFromCart(RentalCartItem item) {
+        cart.remove(item);
+    }
+    
+    /**
+     * Finalizes the rental transaction, updating inventory stock.
+     */
+    public void checkout() {
+        for (RentalCartItem cartItem : cart) {
+            BikeInventoryItem invItem = inventory.stream()
+                .filter(i -> i.getBike().getModel().equals(cartItem.getBike().getModel()))
+                .findFirst()
+                .get(); // Should always find it if validation worked
+
+            invItem.decrementStock(cartItem.getQuantityToRent());
+        }
+        // Cart is cleared after successful checkout (for next session)
+        cart.clear(); 
+    }
+
+    public BikeInventoryItem getInventoryItemByBike(Bike bike) {
+        return inventory.stream()
+            .filter(i -> i.getBike().getModel().equals(bike.getModel()))
+            .findFirst()
+            .orElse(null);
+    }
+}
